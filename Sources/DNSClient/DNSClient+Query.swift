@@ -114,12 +114,26 @@ extension DNSClient {
     ///     - host: Hostname to get the records from
     /// - returns: A future with the resource record
     public func getSRVRecords(from host: String) -> EventLoopFuture<[ResourceRecord<SRVRecord>]> {
+        print("IN getSRVRecords")
+        fflush(stdout)
         return self.sendQuery(forHost: host, type: .srv).map { message in
+                                                                      print("IN getSRVRecords - MESSAGE")
+                                                              print(message)
+        fflush(stdout)
+
             return message.answers.compactMap { answer in
+                                               print("IN getSRVRecords - ANSwER")
+                                                              print(answer)
+        fflush(stdout)
                 guard case .srv(let record) = answer else {
+                    print("ANSWER NIL"
+                                  fflush(stdout)
+
                     return nil
                 }
 
+                    print("RECORD")
+                    print(record)
                 return record
             }
         }
