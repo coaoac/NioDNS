@@ -94,6 +94,11 @@ extension DNSClient {
     }
 
     func send(_ message: Message, to address: SocketAddress? = nil) -> EventLoopFuture<Message> {
+        print("SEND - MESSAGE")
+        print(message)
+        print("SEND - ADDRESS")
+        print(address)
+        fflush(stdout)
         let promise: EventLoopPromise<Message> = loop.makePromise()
         dnsDecoder.messageCache[message.header.id] = SentQuery(message: message, promise: promise)
         
@@ -102,9 +107,10 @@ extension DNSClient {
         struct DNSTimeoutError: Error {}
         
         loop.scheduleTask(in: .seconds(30)) {
+            print("IN SCHEDULER - DNSTimeoutError")
+                    fflush(stdout)
             promise.fail(DNSTimeoutError())
         }
-
         return promise.futureResult
     }
 
