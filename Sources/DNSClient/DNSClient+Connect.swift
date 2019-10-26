@@ -56,11 +56,16 @@ extension DNSClient {
         print(ipv4)
         fflush(stdout)
         return bootstrap.bind(host: ipv4 ? "0.0.0.0" : "::", port: 0).map { channel in
+                                                                           print("CHANNEL")
+                                                                           print(channel)
             let client = DNSClient(
                 channel: channel,
                 address: address,
                 decoder: dnsDecoder
             )
+                                                                           print("CLIENT")
+                                                                           print(client)
+                                                                           fflush(stdout)
 
             dnsDecoder.mainClient = client
             return client
