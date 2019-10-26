@@ -38,6 +38,9 @@ extension DNSClient {
     }
 
     public static func connect(on group: EventLoopGroup, config: [SocketAddress]) -> EventLoopFuture<DNSClient> {
+        print("CONFIG")
+        print(config)
+        
         guard let address = config.preferred else {
             return group.next().makeFailedFuture(MissingNameservers())
         }
