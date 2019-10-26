@@ -126,7 +126,7 @@ extension DNSClient {
                                                               print(answer)
         fflush(stdout)
                 guard case .srv(let record) = answer else {
-                    print("ANSWER NIL"
+                    print("ANSWER NIL")
                                   fflush(stdout)
 
                     return nil
