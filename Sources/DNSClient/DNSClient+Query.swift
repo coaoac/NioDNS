@@ -98,12 +98,15 @@ extension DNSClient {
         print(message)
         print("SEND - ADDRESS")
         print(address)
-        fflush(stdout)
         let promise: EventLoopPromise<Message> = loop.makePromise()
         dnsDecoder.messageCache[message.header.id] = SentQuery(message: message, promise: promise)
         
         channel.writeAndFlush(AddressedEnvelope(remoteAddress: address ?? primaryAddress, data: message), promise: nil)
         
+        print("PRIMARY ADDRESS")
+        print(primaryAddress)
+                fflush(stdout)
+
         struct DNSTimeoutError: Error {}
         
         loop.scheduleTask(in: .seconds(30)) {
